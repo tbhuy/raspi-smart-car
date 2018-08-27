@@ -1,0 +1,46 @@
+{% load static %}
+<html>
+<head>
+    <style>
+    button
+    {
+        width:150px;
+        font-size:120%;
+    }
+    #turn, #speed, #run
+    {
+        margin:10px;
+        padding:5px;
+        font-size:150%;
+    }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />  
+    <script type="text/javascript" src="{% static "js/jquery-3.3.1.min.js" %}"></script>
+</head>
+<body>
+<img src="{% url 'video_feed' %}">
+<div id='run'>
+Run:
+<button onclick="sendCommand('run',1)"> Forward </button>
+<button onclick="sendCommand('run',-1)"> Backward </button>
+<button onclick="sendCommand('stop',0)"> Stop </button>
+</div>
+<div id='turn'>
+Turn:
+<button onclick="sendCommand('turn',1)"> Left </button>
+<button onclick="sendCommand('turn',-1)"> Right </button>
+<button onclick="sendCommand('turn',0)"> Straight </button>
+</div>
+<div id='speed'>
+Speed:
+<button onclick="sendCommand('speedAdjust',1)"> Up </button>
+<button onclick="sendCommand('speedAdjust',-1)"> Down </button>
+</div>
+<script>
+var baseurl = "http://" + document.domain + ":8000/";
+var sendCommand = function (commandName, arg){
+        $.get(baseurl + commandName+"/"+arg);
+  }
+</script>
+</body>
+</html>
